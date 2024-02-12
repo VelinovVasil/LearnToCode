@@ -9,6 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -17,7 +20,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "questions")
 public class Question {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -38,7 +40,16 @@ public class Question {
         this.datePublished = LocalDateTime.now();
     }
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "question_image_urls", joinColumns = @JoinColumn(name = "question_id"))
+    @Column(name = "image_url")
+    private List<String> imageUrls;
 
+    @ManyToMany
+    @JoinTable(name = "questions_categories",
+            joinColumns = @JoinColumn(name = "question_id"),
+            inverseJoinColumns = @JoinColumn(name = "categories_id"))
+    private Set<Category> categories = new LinkedHashSet<>();
 
-    // TODO: Add question tags and image urls
+// TODO: Add question tags and image urls
 }

@@ -11,8 +11,8 @@
     <groupId>org.example</groupId>
     <artifactId>learntocode</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Ticket Master</name>
-    <description>Ticket Master</description>
+    <name>Learn to Code</name>
+    <description>Learn to Code</description>
     <properties>
         <java.version>17</java.version>
     </properties>
