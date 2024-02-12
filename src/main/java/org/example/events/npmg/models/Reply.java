@@ -43,7 +43,9 @@ public class Reply {
     private LocalDateTime dateOfCreation;
 
 
-    //TODO add question_id
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "question_id", nullable = false)
+    private Question question;
 
     @PrePersist
     protected void onCreate() {
