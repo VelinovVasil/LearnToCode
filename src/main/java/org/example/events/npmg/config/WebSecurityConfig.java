@@ -65,6 +65,8 @@ public class WebSecurityConfig {
 				)
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+				.headers().frameOptions().disable()
+				.and()
 				.build();
 	}
 }
