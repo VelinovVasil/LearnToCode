@@ -36,7 +36,7 @@ public class Reply {
 
     @NotEmpty(message = "Reply to the question is manditory")
     @Column(nullable = false)
-    private String replyText;
+    private String reply;
 
 
     @Column(name = "time_published")
