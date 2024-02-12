@@ -1,24 +1,22 @@
 package org.example.events.npmg.payload.DTOs;
 
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Data;
+import lombok.Value;
 import org.example.events.npmg.models.Question;
-import org.example.events.npmg.models.User;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * DTO for {@link Question}
  */
-
-
-@Data
-public class QuestionDto {
-
+@Value
+public class QuestionDto implements Serializable {
     @NotEmpty(message = "Question is mandatory!")
-    private String question;
-
-    private User user;
-    private LocalDateTime date;
-
+    String question;
+    Long userId;
+    LocalDateTime datePublished;
+    Long questionId;
+    List<String> imageUrls;
 }

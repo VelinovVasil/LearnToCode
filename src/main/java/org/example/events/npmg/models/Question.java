@@ -35,11 +35,6 @@ public class Question {
     @Column(name = "date_published")
     private LocalDateTime datePublished;
 
-    @PrePersist
-    protected void onCreate() {
-        this.datePublished = LocalDateTime.now();
-    }
-
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "question_image_urls", joinColumns = @JoinColumn(name = "question_id"))
     @Column(name = "image_url")
@@ -51,5 +46,8 @@ public class Question {
             inverseJoinColumns = @JoinColumn(name = "categories_id"))
     private Set<Category> categories = new LinkedHashSet<>();
 
-// TODO: Add question tags and image urls
+    @PrePersist
+    protected void onCreate() {
+        this.datePublished = LocalDateTime.now();
+    }
 }
