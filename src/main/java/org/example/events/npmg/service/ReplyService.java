@@ -25,6 +25,8 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
     private final ReplyMapper replyMapper;
+    private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
 
     public ResponseEntity<ReplyDto> getReplyById(Long userId) {
         Reply reply = findById(replyRepository, userId);
@@ -50,7 +52,41 @@ public class ReplyService {
         return ResponseEntity.ok(new MessageResponse("The reply has been deleted successfully!"));
     }
 
-    //public ResponseEntity<MessageResponse> postReply(Long questionId, String reply) {
+    public ResponseEntity<MessageResponse> postReplyToQuestion(Long authorId, Long questionId, String replyComment) {
 
-    //}
+        // This method posts a reply to a certain Question
+
+        Reply reply = new Reply();
+
+        Question question = findById(questionRepository, questionId);
+        reply.setQuestion(question);
+
+        User author = findById(userRepository, authorId);
+        reply.setUser(author);
+
+        reply.setReply(replyComment);
+
+        replyRepository.save(reply);
+
+        return ResponseEntity.ok(new MessageResponse("A reply to the question was successfully posted"));
+    }
+
+    public ResponseEntity<MessageResponse> postReplyToReply(Long authorId, Long replyId, String replyComment) {
+
+        // This method posts a reply to a certain reply (reply to a reply)
+
+        Reply reply = new Reply();
+
+        User author = findById(userRepository, authorId);
+        reply.setUser(author);
+
+        Reply repliedReply = findById(replyRepository, replyId);
+        reply.setReplyToReply(repliedReply);
+
+        reply.setReply(replyComment);
+
+        replyRepository.save(reply);
+
+        return ResponseEntity.ok(new MessageResponse("A reply to the reply was successfully posted"));
+    }
 }
