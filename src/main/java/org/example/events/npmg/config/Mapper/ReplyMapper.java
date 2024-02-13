@@ -2,7 +2,6 @@ package org.example.events.npmg.config.Mapper;
 
 
 import org.example.events.npmg.models.Reply;
-import org.example.events.npmg.payload.DTOs.EventDto;
 import org.example.events.npmg.payload.DTOs.ReplyDto;
 import org.example.events.npmg.repository.QuestionRepository;
 import org.example.events.npmg.repository.UserRepository;
@@ -42,8 +41,8 @@ public class ReplyMapper {
         return modelMapper.map(reply, ReplyDto.class);
     }
 
-    public List<EventDto> toDto(List<Reply> replies) {
-        Type listType = new TypeToken<List<EventDto>>() {
+    public List<ReplyDto> toDto(List<Reply> replies) {
+        Type listType = new TypeToken<List<ReplyDto>>() {
         }.getType();
         return modelMapper.map(replies, listType);
     }

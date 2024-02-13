@@ -20,6 +20,7 @@ import java.util.Set;
 @Entity
 @Table(name = "questions")
 public class Question {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -35,19 +36,20 @@ public class Question {
     @Column(name = "date_published")
     private LocalDateTime datePublished;
 
+    @PrePersist
+    protected void onCreate() {
+        this.datePublished = LocalDateTime.now();
+    }
+
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "question_image_urls", joinColumns = @JoinColumn(name = "question_id"))
     @Column(name = "image_url")
     private List<String> imageUrls;
 
     @ManyToMany
-    @JoinTable(name = "questions_categories",
+    @JoinTable(name = "questions_tags",
             joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "categories_id"))
-    private Set<Category> categories = new LinkedHashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "tags_id"))
+    private Set<Tag> tags = new LinkedHashSet<>();
 
-    @PrePersist
-    protected void onCreate() {
-        this.datePublished = LocalDateTime.now();
-    }
 }
