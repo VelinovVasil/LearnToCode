@@ -27,10 +27,12 @@ public class Question {
 
     @NotEmpty(message = "Question is mandatory!")
     @Column(nullable = false)
+    //change this to 'text'
     private String question;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
+    //change this to 'author'
     private User user;
 
     @Column(name = "date_published")

@@ -2,6 +2,7 @@ package org.example.events.npmg.payload.DTOs;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import lombok.Value;
 import org.example.events.npmg.models.Question;
 import org.example.events.npmg.payload.DTOs.TagDto;
@@ -15,8 +16,9 @@ import java.util.Set;
 /**
  * DTO for {@link Question}
  */
-@Value
-public class QuestionDto implements Serializable {
+//use @Data because modelMapper won't be able to map the object to the DTO
+@Data
+public class QuestionDto {
     long id;
     @NotEmpty(message = "Question is mandatory!")
     String question;
