@@ -33,19 +33,33 @@ public class QuestionController {
     }
 
 
+    //wrong, if you want to receive data from the body, you should use @RequestBody
+    /*@PutMapping("/{id}")
+    public ResponseEntity<MessageResponse> updateQuestion(@PathVariable Long id, @RequestBody QuestionDto questionDto) {
+        return questionService.updateQuestion(id, questionDto);
+    }*/
     @GetMapping("/{id}/question")
     public ResponseEntity<MessageResponse> changeQuestion(@PathVariable Long id, String question) {
         return questionService.changeQuestion(id, question);
     }
 
+    //delete mapping
     @GetMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteQuestion(@PathVariable Long id) {
         return questionService.deleteQuestion(id);
     }
 
 
+    //wrong
+    /*@PostMapping("/")
+    public ResponseEntity<MessageResponse> createQuestion(@RequestBody QuestionDto data) {
+        return questionService.createQuestion(data);
+    }*/
     @GetMapping("/{author_id}/question/tag")
     public ResponseEntity<MessageResponse> postQuestion(@PathVariable Long userId, String question, List<Long> tagIds) {
         return questionService.postQuestion(userId, question, tagIds);
     }
+
+
+
 }

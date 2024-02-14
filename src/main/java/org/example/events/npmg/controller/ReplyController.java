@@ -1,6 +1,7 @@
 package org.example.events.npmg.controller;
 
-
+//unused imports
+//pres ctrl+alt+shift+l
 import com.azure.core.annotation.Get;
 import lombok.RequiredArgsConstructor;
 import org.example.events.npmg.payload.DTOs.QuestionDto;
@@ -24,6 +25,8 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
+    //make create reply
+
     @GetMapping("/{id}")
     public ResponseEntity<ReplyDto> getReplyByID(@PathVariable Long id) {
         return replyService.getReplyById(id);
@@ -35,21 +38,26 @@ public class ReplyController {
         return replyService.getAllReplies();
     }
 
+    //use update instead of change like in QuestionController
     @GetMapping("/{id}/reply")
     public ResponseEntity<MessageResponse> changeReply(@PathVariable Long id, String reply) {
         return replyService.changeReply(id, reply);
     }
 
+    //delete mapping
     @GetMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteReply(@PathVariable Long id) {
         return replyService.deleteReply(id);
     }
 
+    //you don't need it
     @GetMapping("/{author_id}/{question_id}/reply")
     public ResponseEntity<MessageResponse> postReplyToQuestion(@PathVariable Long userId, Long questionId, String reply) {
         return replyService.postReplyToQuestion(userId, questionId, reply);
     }
 
+    //think of a better way to receive data, usually path variables are used only for ids for the current controller
+    //use post mapping
     @GetMapping("/{author_id}/{reply_id}/reply")
     public ResponseEntity<MessageResponse> postReplyToReply(@PathVariable Long userId, Long replyId, String reply) {
         return replyService.postReplyToReply(userId, replyId, reply);
