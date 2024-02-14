@@ -2,7 +2,6 @@ package org.example.events.npmg.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.events.npmg.config.Mapper.ReplyMapper;
-import org.example.events.npmg.config.Mapper.UserMapper;
 import org.example.events.npmg.models.Question;
 import org.example.events.npmg.models.Reply;
 import org.example.events.npmg.models.User;
@@ -10,7 +9,6 @@ import org.example.events.npmg.payload.DTOs.ReplyDto;
 import org.example.events.npmg.payload.response.MessageResponse;
 import org.example.events.npmg.repository.QuestionRepository;
 import org.example.events.npmg.repository.ReplyRepository;
-import org.example.events.npmg.repository.RoleRepository;
 import org.example.events.npmg.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,7 +28,9 @@ public class ReplyService {
 
     public ResponseEntity<ReplyDto> getReplyById(Long userId) {
         Reply reply = findById(replyRepository, userId);
-        return ResponseEntity.ok(replyMapper.toDto(reply));
+        //make a variable
+        ReplyDto replyDto = replyMapper.toDto(reply);
+        return ResponseEntity.ok(replyDto);
     }
 
     public ResponseEntity<List<ReplyDto>> getAllReplies() {
@@ -38,6 +38,16 @@ public class ReplyService {
         List<ReplyDto> replyDtos = replyMapper.toDto(replies);
         return ResponseEntity.ok(replyDtos);
     }
+
+    //usually it's called update
+/*
+        public ResponseEntity<MessageResponse> updateReply(Long replyId, String newReply) {
+            Reply reply = findById(replyRepository, replyId);
+            reply.setReply(newReply);
+            replyRepository.save(reply);
+            return ResponseEntity.ok(new MessageResponse("The reply has been changed successfully!"));
+        }
+*/
 
     public ResponseEntity<MessageResponse> changeReply(Long replyId, String reply) {
         Reply reply1 = findById(replyRepository, replyId);
@@ -52,10 +62,12 @@ public class ReplyService {
         return ResponseEntity.ok(new MessageResponse("The reply has been deleted successfully!"));
     }
 
+    //you don't need postReplyToQuestion, the question is already in the reply when you create it
+    /**
+     * {@link ReplyDto}
+     */
+
     public ResponseEntity<MessageResponse> postReplyToQuestion(Long authorId, Long questionId, String replyComment) {
-
-        // This method posts a reply to a certain Question
-
         Reply reply = new Reply();
 
         Question question = findById(questionRepository, questionId);
@@ -71,6 +83,15 @@ public class ReplyService {
         return ResponseEntity.ok(new MessageResponse("A reply to the question was successfully posted"));
     }
 
+    //maybe name 'reply' in the class to 'text' because the code is not clear
+/*    public ResponseEntity<MessageResponse> setReplyToReply(Long authorId, Long replyId, ReplyDto data) {
+        Reply mainReply = findById(replyRepository, replyId);
+        Reply chainedReply = replyMapper.toEntity(data);
+        replyRepository.save(chainedReply);//this automatically updates its Id. So you don't need to set it manually
+        chainedReply.setReplyToReply(mainReply);
+
+        return ResponseEntity.ok(new MessageResponse("A reply to the reply was successfully posted"));
+    }*/
     public ResponseEntity<MessageResponse> postReplyToReply(Long authorId, Long replyId, String replyComment) {
 
         // This method posts a reply to a certain reply (reply to a reply)

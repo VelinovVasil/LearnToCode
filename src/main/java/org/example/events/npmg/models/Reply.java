@@ -32,10 +32,12 @@ public class Reply {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
+    //change this to 'author'
     private User user;
 
     @NotEmpty(message = "Reply to the question is manditory")
     @Column(nullable = false)
+    //change this to 'text'
     private String reply;
 
 
