@@ -56,7 +56,7 @@ public class QuestionService {
         return ResponseEntity.ok(new MessageResponse("The question has been deleted successfully!"));
     }
 
-    public ResponseEntity<MessageResponse> postQuestion(String questionContent, Long userId, List<Long> tagIds) {
+    public ResponseEntity<MessageResponse> postQuestion(Long userId, String questionContent, List<Long> tagIds) {
 
         // Each question has a body (content),
         // userId by which the author is found in the userRepository,
