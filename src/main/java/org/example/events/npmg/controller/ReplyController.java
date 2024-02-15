@@ -3,6 +3,7 @@ package org.example.events.npmg.controller;
 //unused imports
 //pres ctrl+alt+shift+l
 import com.azure.core.annotation.Get;
+import com.azure.core.annotation.Post;
 import lombok.RequiredArgsConstructor;
 import org.example.events.npmg.payload.DTOs.QuestionDto;
 import org.example.events.npmg.service.QuestionService;
@@ -51,16 +52,16 @@ public class ReplyController {
     }
 
     //you don't need it
-    @GetMapping("/{author_id}/{question_id}/reply")
-    public ResponseEntity<MessageResponse> postReplyToQuestion(@PathVariable Long userId, Long questionId, String reply) {
-        return replyService.postReplyToQuestion(userId, questionId, reply);
+    @PostMapping("/{author_id}/{question_id}/reply")
+    public ResponseEntity<MessageResponse> postReplyToQuestion(@PathVariable Long author_id, Long question_id, String reply) {
+        return replyService.postReplyToQuestion(author_id, question_id, reply);
     }
 
     //think of a better way to receive data, usually path variables are used only for ids for the current controller
     //use post mapping
-    @GetMapping("/{author_id}/{reply_id}/reply")
-    public ResponseEntity<MessageResponse> postReplyToReply(@PathVariable Long userId, Long replyId, String reply) {
-        return replyService.postReplyToReply(userId, replyId, reply);
+    @PostMapping("/{author_id}/{reply_id}/reply")
+    public ResponseEntity<MessageResponse> postReplyToReply(@PathVariable Long author_id, Long reply_id, String reply) {
+        return replyService.postReplyToReply(author_id, reply_id, reply);
     }
 
 }
