@@ -39,17 +39,9 @@ public class ReplyService {
         return ResponseEntity.ok(replyDtos);
     }
 
-    //usually it's called update
-/*
-        public ResponseEntity<MessageResponse> updateReply(Long replyId, String newReply) {
-            Reply reply = findById(replyRepository, replyId);
-            reply.setReply(newReply);
-            replyRepository.save(reply);
-            return ResponseEntity.ok(new MessageResponse("The reply has been changed successfully!"));
-        }
-*/
 
-    public ResponseEntity<MessageResponse> changeReply(Long replyId, String reply) {
+
+    public ResponseEntity<MessageResponse> updateReply(Long replyId, String reply) {
         Reply reply1 = findById(replyRepository, replyId);
         reply1.setReply(reply);
         replyRepository.save(reply1);
@@ -84,14 +76,16 @@ public class ReplyService {
     }
 
     //maybe name 'reply' in the class to 'text' because the code is not clear
-/*    public ResponseEntity<MessageResponse> setReplyToReply(Long authorId, Long replyId, ReplyDto data) {
+/*public ResponseEntity<MessageResponse> setReplyToReply(Long authorId, Long replyId, ReplyDto data) {
         Reply mainReply = findById(replyRepository, replyId);
         Reply chainedReply = replyMapper.toEntity(data);
         replyRepository.save(chainedReply);//this automatically updates its Id. So you don't need to set it manually
         chainedReply.setReplyToReply(mainReply);
 
         return ResponseEntity.ok(new MessageResponse("A reply to the reply was successfully posted"));
-    }*/
+    }
+
+ */
     public ResponseEntity<MessageResponse> postReplyToReply(Long authorId, Long replyId, String replyComment) {
 
         // This method posts a reply to a certain reply (reply to a reply)

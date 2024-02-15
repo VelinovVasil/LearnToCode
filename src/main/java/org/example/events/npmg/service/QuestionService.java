@@ -46,12 +46,12 @@ public class QuestionService {
     }
 
     //name it update
-/*    public ResponseEntity<MessageResponse> updateQuestion(Long id, QuestionDto data) {
+    public ResponseEntity<MessageResponse> updateQuestion(Long id, QuestionDto data) {
         Question question = findById(questionRepository, id);
         modelMapper.map(data, question);//this maps the data from the dto to the entity and scip the null values, because the modelmapper is configured to do so
         questionRepository.save(question);
         return ResponseEntity.ok(new MessageResponse("Event updated successfully!"));
-    }*/
+    }
     public ResponseEntity<MessageResponse> changeQuestion(Long questionId, String question) {
         Question question1 = findById(questionRepository, questionId);
         question1.setQuestion(question);
@@ -65,21 +65,19 @@ public class QuestionService {
         return ResponseEntity.ok(new MessageResponse("The question has been deleted successfully!"));
     }
 
-    //you don't need to explain this method
-    //name it create
-    //use QuestionDto instead of individual parameters
-    //rewrite the question mapper like reply mapper
-/*    public ResponseEntity<MessageResponse> createQuestion(QuestionDto data) {
+
+   public ResponseEntity<MessageResponse> createQuestion(QuestionDto data) {
         //maybe implement custom exceptions and validations for the data
         Question question = questionMapper.toEntity(data);
         questionRepository.save(question);
 
         return ResponseEntity.ok(new MessageResponse("The question has been created successfully!"));
-    }*/
+    }
 
 
     //too long
-    public ResponseEntity<MessageResponse> postQuestion(String questionContent, Long userId, List<Long> tagIds) {
+    /*
+    public ResponseEntity<MessageResponse> createQuestion(Long userId, String questionContent, List<Long> tagIds) {
 
         // Each question has a body (content),
         // userId by which the author is found in the userRepository,
@@ -104,5 +102,7 @@ public class QuestionService {
 
         return ResponseEntity.ok(new MessageResponse("The question has been posted successfully!"));
     }
+
+     */
 
 }

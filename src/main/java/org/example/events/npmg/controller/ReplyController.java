@@ -39,13 +39,13 @@ public class ReplyController {
     }
 
     //use update instead of change like in QuestionController
-    @GetMapping("/{id}/reply")
-    public ResponseEntity<MessageResponse> changeReply(@PathVariable Long id, String reply) {
-        return replyService.changeReply(id, reply);
+    @PutMapping("/{id}/reply")
+    public ResponseEntity<MessageResponse> updateReply(@PathVariable Long id, String reply) {
+        return replyService.updateReply(id, reply);
     }
 
     //delete mapping
-    @GetMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteReply(@PathVariable Long id) {
         return replyService.deleteReply(id);
     }
