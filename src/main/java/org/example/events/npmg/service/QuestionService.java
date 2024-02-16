@@ -76,33 +76,33 @@ public class QuestionService {
 
 
     //too long
-    /*
-    public ResponseEntity<MessageResponse> createQuestion(Long userId, String questionContent, List<Long> tagIds) {
-
-        // Each question has a body (content),
-        // userId by which the author is found in the userRepository,
-        // tagIds (similar logic to userId)
-
-
-        User author = findById(userRepository, userId);
-
-        Question question = new Question();
-        question.setQuestion(questionContent);
-        question.setUser(author);
-
-        Set<Tag> tags = new LinkedHashSet<>();
-        for (Long tagId : tagIds) {
-            Tag tag = findById(tagRepository, tagId);
-            tags.add(tag);
-        }
-
-        question.setTags(tags);
-
-        questionRepository.save(question);
-
-        return ResponseEntity.ok(new MessageResponse("The question has been posted successfully!"));
-    }
-
-     */
+//
+//    public ResponseEntity<MessageResponse> createQuestion(Long userId, String questionContent, List<Long> tagIds) {
+//
+//        // Each question has a body (content),
+//        // userId by which the author is found in the userRepository,
+//        // tagIds (similar logic to userId)
+//
+//
+//        User author = findById(userRepository, userId);
+//
+//        Question question = new Question();
+//        question.setQuestion(questionContent);
+//        question.setUser(author);
+//
+//        Set<Tag> tags = new LinkedHashSet<>();
+//        for (Long tagId : tagIds) {
+//            Tag tag = findById(tagRepository, tagId);
+//            tags.add(tag);
+//        }
+//
+//        question.setTags(tags);
+//
+//        questionRepository.save(question);
+//
+//        return ResponseEntity.ok(new MessageResponse("The question has been posted successfully!"));
+//    }
+//
+//
 
 }

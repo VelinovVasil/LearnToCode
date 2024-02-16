@@ -12,7 +12,6 @@ import java.util.Set;
  * DTO for {@link org.example.events.npmg.models.Tag}
  */
 
-//use @Data because modelMapper won't be able to map the object to the DTO
 @Data
 public class TagDto {
     Long id;

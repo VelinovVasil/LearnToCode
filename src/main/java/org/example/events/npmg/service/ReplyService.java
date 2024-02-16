@@ -43,7 +43,7 @@ public class ReplyService {
 
     public ResponseEntity<MessageResponse> updateReply(Long replyId, String reply) {
         Reply reply1 = findById(replyRepository, replyId);
-        reply1.setReply(reply);
+        reply1.setText(reply);
         replyRepository.save(reply1);
 
         return ResponseEntity.ok(new MessageResponse("The reply has been changed successfully!"));
@@ -66,17 +66,17 @@ public class ReplyService {
         reply.setQuestion(question);
 
         User author = findById(userRepository, authorId);
-        reply.setUser(author);
+        reply.setAuthor(author);
 
-        reply.setReply(replyComment);
+        reply.setText(replyComment);
 
         replyRepository.save(reply);
 
         return ResponseEntity.ok(new MessageResponse("A reply to the question was successfully posted"));
     }
 
-    //maybe name 'reply' in the class to 'text' because the code is not clear
-/*public ResponseEntity<MessageResponse> setReplyToReply(Long authorId, Long replyId, ReplyDto data) {
+
+    public ResponseEntity<MessageResponse> setReplyToReply(Long authorId, Long replyId, ReplyDto data) {
         Reply mainReply = findById(replyRepository, replyId);
         Reply chainedReply = replyMapper.toEntity(data);
         replyRepository.save(chainedReply);//this automatically updates its Id. So you don't need to set it manually
@@ -85,7 +85,7 @@ public class ReplyService {
         return ResponseEntity.ok(new MessageResponse("A reply to the reply was successfully posted"));
     }
 
- */
+
     public ResponseEntity<MessageResponse> postReplyToReply(Long authorId, Long replyId, String replyComment) {
 
         // This method posts a reply to a certain reply (reply to a reply)
@@ -93,12 +93,12 @@ public class ReplyService {
         Reply reply = new Reply();
 
         User author = findById(userRepository, authorId);
-        reply.setUser(author);
+        reply.setAuthor(author);
 
         Reply repliedReply = findById(replyRepository, replyId);
         reply.setReplyToReply(repliedReply);
 
-        reply.setReply(replyComment);
+        reply.setText(replyComment);
 
         replyRepository.save(reply);
 

@@ -40,12 +40,11 @@ public class QuestionController {
     }
 
 
-    @GetMapping("/{id}/question")
+    @PutMapping("/{id}/question")
     public ResponseEntity<MessageResponse> changeQuestion(@PathVariable Long id, String question) {
         return questionService.changeQuestion(id, question);
     }
 
-    //delete mapping
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteQuestion(@PathVariable Long id) {
         return questionService.deleteQuestion(id);
@@ -56,7 +55,5 @@ public class QuestionController {
     public ResponseEntity<MessageResponse> createQuestion(@RequestBody QuestionDto questionDto) {
         return questionService.createQuestion(questionDto);
     }
-
-
 
 }
