@@ -26,6 +26,21 @@ public class ReplyService {
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
 
+    public ResponseEntity<MessageResponse> createReply(ReplyDto data) {
+        Reply reply = replyMapper.toEntity(data);
+        replyRepository.save(reply);
+        return ResponseEntity.ok(new MessageResponse("The reply has been created successfully!"));
+    }
+
+    public ResponseEntity<MessageResponse> createChildReply(Long parentId, ReplyDto data) {
+        Reply child = replyMapper.toEntity(data);
+        Reply parent = findById(replyRepository, parentId);
+        child.setParent(parent);
+        replyRepository.save(child);
+        return ResponseEntity.ok(new MessageResponse("The reply has been created successfully!"));
+
+    }
+
     public ResponseEntity<ReplyDto> getReplyById(Long userId) {
         Reply reply = findById(replyRepository, userId);
         //make a variable
@@ -80,7 +95,7 @@ public class ReplyService {
         Reply mainReply = findById(replyRepository, replyId);
         Reply chainedReply = replyMapper.toEntity(data);
         replyRepository.save(chainedReply);//this automatically updates its Id. So you don't need to set it manually
-        chainedReply.setReplyToReply(mainReply);
+        chainedReply.setParent(mainReply);
 
         return ResponseEntity.ok(new MessageResponse("A reply to the reply was successfully posted"));
     }
@@ -96,7 +111,7 @@ public class ReplyService {
         reply.setAuthor(author);
 
         Reply repliedReply = findById(replyRepository, replyId);
-        reply.setReplyToReply(repliedReply);
+        reply.setParent(repliedReply);
 
         reply.setText(replyComment);
 

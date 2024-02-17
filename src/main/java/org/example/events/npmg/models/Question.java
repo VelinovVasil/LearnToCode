@@ -3,16 +3,14 @@ package org.example.events.npmg.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+@ToString
 @Data
 @Builder
 @NoArgsConstructor
@@ -27,13 +25,22 @@ public class Question {
 
     @NotEmpty(message = "Question is mandatory!")
     @Column(nullable = false)
-    //change this to 'text'
-    private String question;
+    private String text;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    //change this to 'author'
-    private User user;
+    private User author;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "questions_tags",
+            joinColumns = @JoinColumn(name = "question_id"),
+            inverseJoinColumns = @JoinColumn(name = "tags_id"))
+    private Set<Tag> tags = new LinkedHashSet<>();
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name = "question_image_urls", joinColumns = @JoinColumn(name = "question_id"))
+    @Column(name = "image_url")
+    private List<String> imageUrls;
 
     @Column(name = "date_published")
     private LocalDateTime datePublished;
@@ -42,16 +49,5 @@ public class Question {
     protected void onCreate() {
         this.datePublished = LocalDateTime.now();
     }
-
-    @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "question_image_urls", joinColumns = @JoinColumn(name = "question_id"))
-    @Column(name = "image_url")
-    private List<String> imageUrls;
-
-    @ManyToMany
-    @JoinTable(name = "questions_tags",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "tags_id"))
-    private Set<Tag> tags = new LinkedHashSet<>();
 
 }

@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Data
 public class ReplyDto {
     Long userId;
-    @NotEmpty(message = "Reply to the question is mandatory")
     String text;
     LocalDateTime dateOfCreation;
     Long questionId;

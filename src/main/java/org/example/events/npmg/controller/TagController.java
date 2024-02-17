@@ -17,6 +17,11 @@ public class TagController {
 
     private final TagService tagService;
 
+    @PostMapping("/")
+    public ResponseEntity<TagDto> createTag(@RequestBody TagDto tagDto) {
+        return tagService.createTag(tagDto);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<TagDto> getTagById(@PathVariable Long id) {
         return tagService.getTagById(id);
@@ -27,9 +32,11 @@ public class TagController {
         return tagService.getAllTags();
     }
 
-    @PutMapping("/{id}/text")
-    public ResponseEntity<MessageResponse> updateTag(@PathVariable Long id, String text) {
-        return tagService.updateTag(id, text);
+    //path: /api/tags/{id}?name=updatedName
+    //but it's better to use TagDto instead of only 'name', what if you want to add more fields in the future?
+    @PutMapping("/{id}")
+    public ResponseEntity<MessageResponse> updateTagName(@PathVariable Long id, @RequestParam String name) {
+        return tagService.updateTag(id, name);
     }
 
     @DeleteMapping("/{id}")

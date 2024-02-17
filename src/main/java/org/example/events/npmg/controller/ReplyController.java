@@ -2,21 +2,15 @@ package org.example.events.npmg.controller;
 
 //unused imports
 //pres ctrl+alt+shift+l
-import com.azure.core.annotation.Get;
-import com.azure.core.annotation.Post;
+
 import lombok.RequiredArgsConstructor;
-import org.example.events.npmg.payload.DTOs.QuestionDto;
-import org.example.events.npmg.service.QuestionService;
-import org.example.events.npmg.service.ReplyService;
-import org.springframework.web.bind.annotation.RestController;
-import org.example.events.npmg.models.Role.ERole;
 import org.example.events.npmg.payload.DTOs.ReplyDto;
 import org.example.events.npmg.payload.response.MessageResponse;
+import org.example.events.npmg.service.ReplyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 
 @RestController
@@ -27,9 +21,19 @@ public class ReplyController {
     private final ReplyService replyService;
 
     //make create reply
+    @PostMapping("/")
+    public ResponseEntity<MessageResponse> createReply(@RequestBody ReplyDto data) {
+        return replyService.createReply(data);
+    }
+
+    //make create child reply
+    @PostMapping("/{parentId}")
+    public ResponseEntity<MessageResponse> createChildReply(@PathVariable Long parentId, @RequestBody ReplyDto data) {
+        return replyService.createChildReply(parentId, data);
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReplyDto> getReplyByID(@PathVariable Long id) {
+    public ResponseEntity<ReplyDto> getReplyById(@PathVariable Long id) {
         return replyService.getReplyById(id);
     }
 
@@ -39,19 +43,20 @@ public class ReplyController {
         return replyService.getAllReplies();
     }
 
-    //use update instead of change like in QuestionController
-    @PutMapping("/{id}/reply")
-    public ResponseEntity<MessageResponse> updateReply(@PathVariable Long id, String reply) {
+    //path: /api/replies/{id}/reply?reply=yourReply
+    //with longer text or more parameters text use @RequestBody and a class f.e. ReplyDto
+    @PutMapping("/{id}")
+    public ResponseEntity<MessageResponse> updateReply(@PathVariable Long id, @RequestParam String reply) {
         return replyService.updateReply(id, reply);
     }
 
-    //delete mapping
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteReply(@PathVariable Long id) {
         return replyService.deleteReply(id);
     }
 
     //you don't need it
+/*
     @PostMapping("/{author_id}/{question_id}/reply")
     public ResponseEntity<MessageResponse> postReplyToQuestion(@PathVariable Long author_id, Long question_id, String reply) {
         return replyService.postReplyToQuestion(author_id, question_id, reply);
@@ -62,6 +67,6 @@ public class ReplyController {
     @PostMapping("/{author_id}/{reply_id}/reply")
     public ResponseEntity<MessageResponse> postReplyToReply(@PathVariable Long author_id, Long reply_id, String reply) {
         return replyService.postReplyToReply(author_id, reply_id, reply);
-    }
-
+        }
+*/
 }

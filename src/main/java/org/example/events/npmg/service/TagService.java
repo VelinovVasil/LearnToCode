@@ -21,8 +21,14 @@ public class TagService {
     private final TagRepository tagRepository;
     private final TagMapper tagMapper;
 
-    public ResponseEntity<TagDto> getTagById(Long tagId) {
+    public ResponseEntity<TagDto> createTag(TagDto data) {
+        Tag tag = tagMapper.toEntity(data);
+        tagRepository.save(tag);
 
+        return ResponseEntity.ok(tagMapper.toDto(tag));
+    }
+
+    public ResponseEntity<TagDto> getTagById(Long tagId) {
         Tag tag = findById(tagRepository, tagId);
         TagDto tagDto = tagMapper.toDto(tag);
 
@@ -30,15 +36,14 @@ public class TagService {
     }
 
     public ResponseEntity<List<TagDto>> getAllTags() {
-
         List<Tag> tags = tagRepository.findAll();
         List<TagDto> tagDtos = tagMapper.toDto(tags);
 
         return ResponseEntity.ok(tagDtos);
     }
 
+    //better to use TagDto instead of only 'name', what if you want to add more fields in the future?
     public ResponseEntity<MessageResponse> updateTag(Long tagId, String name) {
-
         Tag toUpdate = findById(tagRepository, tagId);
         toUpdate.setName(name);
         tagRepository.save(toUpdate);
@@ -47,7 +52,6 @@ public class TagService {
     }
 
     public ResponseEntity<MessageResponse> deleteTag(Long tagId) {
-
         tagRepository.deleteById(tagId);
 
         return ResponseEntity.ok(new MessageResponse("Tag has been deleted successfully."));

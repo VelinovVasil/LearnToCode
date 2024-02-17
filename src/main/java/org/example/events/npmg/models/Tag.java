@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "categories")
+@Table(name = "tags")
 public class Tag {
 
     @Id
@@ -20,10 +20,6 @@ public class Tag {
     @NotNull
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "categories_questions",
-            joinColumns = @JoinColumn(name = "tag_id"),
-            inverseJoinColumns = @JoinColumn(name = "questions_id"))
+    @ManyToMany(mappedBy = "tags")
     private Set<Question> questions = new LinkedHashSet<>();
-
 }

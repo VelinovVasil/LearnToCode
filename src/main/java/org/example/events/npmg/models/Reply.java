@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="replies")
+@Table(name = "replies")
 
 
 public class Reply {
@@ -34,18 +34,16 @@ public class Reply {
     @Column(nullable = false)
     private String text;
 
-
-    @Column(name = "time_published")
-    private LocalDateTime dateOfCreation;
-
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "reply_to_reply_id", nullable = false)
-    private Reply replyToReply;
+    @JoinColumn(name = "parent_id", nullable = false)
+    private Reply parent;
+
+    @Column(name = "time_published")
+    private LocalDateTime dateOfCreation;
 
     @PrePersist
     protected void onCreate() {

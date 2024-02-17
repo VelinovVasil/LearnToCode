@@ -20,12 +20,9 @@ import java.util.Set;
 @Data
 public class QuestionDto {
     long id;
-    @NotEmpty(message = "Question is mandatory!")
-    String question;
-    @NotNull
-    UserDto user;
-    @NotNull
-    LocalDateTime datePublished;
+    String text;
+    Long authorId;
+    Set<Long> tagIds;
     List<String> imageUrls;
-    Set<TagDto> tags;
+    LocalDateTime datePublished;
 }
