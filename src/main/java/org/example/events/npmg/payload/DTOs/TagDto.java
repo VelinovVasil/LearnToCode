@@ -15,7 +15,6 @@ import java.util.Set;
 @Data
 public class TagDto {
     Long id;
-    @NotNull
     String name;
-    Set<Question> questions;
+    Set<Long> questionsIds;
 }

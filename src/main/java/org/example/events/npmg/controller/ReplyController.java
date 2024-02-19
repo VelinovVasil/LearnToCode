@@ -43,7 +43,7 @@ public class ReplyController {
         return replyService.getAllReplies();
     }
 
-    //path: /api/replies/{id}/reply?reply=yourReply
+    //path: /api/replies/{id}?reply=yourReply
     //with longer text or more parameters text use @RequestBody and a class f.e. ReplyDto
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponse> updateReply(@PathVariable Long id, @RequestParam String reply) {
