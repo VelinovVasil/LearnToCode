@@ -16,5 +16,4 @@ import java.util.Set;
 public class TagDto {
     Long id;
     String name;
-    Set<Long> questionsIds;
 }

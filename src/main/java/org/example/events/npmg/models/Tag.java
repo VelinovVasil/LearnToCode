@@ -19,7 +19,4 @@ public class Tag {
     @Column(unique = true)
     @NotNull
     private String name;
-
-    @ManyToMany(mappedBy = "tags")
-    private Set<Question> questions = new LinkedHashSet<>();
 }
