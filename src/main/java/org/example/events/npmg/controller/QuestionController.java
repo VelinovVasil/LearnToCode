@@ -37,13 +37,11 @@ public class QuestionController {
         return questionService.updateQuestion(id, data);
     }
 
-    //to use the method you send a request to /api/questions/{id}/question?question=yourQuestion
-    //because you are using a @RequestParam
-    //nonetheless, it's a useless method, you have updateQuestion
-    @PutMapping("/{id}/question")
-    public ResponseEntity<MessageResponse> changeQuestion(@PathVariable Long id, @RequestParam String question) {
-        return questionService.changeQuestion(id, question);
-    }
+    /*
+    @RequestBody - to map the request body to a Java object
+    @RequestParam - to extract query parameters
+    @PathVariable - to extract parameters from the URI
+    */
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteQuestion(@PathVariable Long id) {
