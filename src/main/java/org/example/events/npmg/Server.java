@@ -14,9 +14,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class Server {
 
-	@Value("${openai.key}")
-	private String openaiApiKey;
-
 	public static void main(String[] args) {
 		SpringApplication.run(Server.class, args);
 	}
@@ -29,17 +26,5 @@ public class Server {
 					roleRepository.save(new Role(role));
 			}
 		};
-	}
-
-	@Bean
-	public RestTemplate restTemplate() {
-
-		RestTemplate restTemplate = new RestTemplate();
-		restTemplate.getInterceptors().add(((request, body, execution) -> {
-			request.getHeaders().add("Authorization",
-					"Bearer " + openaiApiKey);
-			return execution.execute(request, body);
-		}));
-		return restTemplate;
 	}
 }
